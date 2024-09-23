@@ -45,7 +45,9 @@ build/
 .smarttomcat/
 
 # Ignore all .jar files inside any 'libs' directories
-**/libs/*.jar
+# **/libs/*.jar
+
+**/src/main/webapp/WEB-INF/view
 
 **/src/main/webapp/WEB-INF/libs
 
