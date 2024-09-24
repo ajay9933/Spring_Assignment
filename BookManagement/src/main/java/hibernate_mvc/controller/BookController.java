@@ -22,14 +22,34 @@ import java.util.Set;
 @RequestMapping("/books")
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+
+    private final BookService bookService;
+
+    private final AuthorService authorService;
+
+    private final CategoryService categoryService;
+
+
+
+    private final String bookView="book";
+
+    private final String bookformView="book-form";
+
+    private final String BOOK_ATTRIBUTE="book";
+
+    private final String BOOKS="books";
+
+    private final String AUTHORS="authors";
+
+    private final String CATEGORIES="categories";
+
 
     @Autowired
-    private AuthorService authorService;
-
-    @Autowired
-    private CategoryService categoryService;
+    public BookController(AuthorService authorService,BookService bookService,CategoryService categoryService) {
+        this.authorService = authorService;
+        this.bookService=bookService;
+        this.categoryService=categoryService;
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder)
@@ -41,27 +61,27 @@ public class BookController {
 
     @GetMapping("/list")
     public String listBooks(Model model) {
-        model.addAttribute("books", bookService.getAllBooks());
-        return "book";
+        model.addAttribute(BOOKS, bookService.getAllBooks());
+        return bookView;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("authors", authorService.getAllAuthors());
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "book-form";
+        model.addAttribute(BOOK_ATTRIBUTE, new Book());
+        model.addAttribute(AUTHORS, authorService.getAllAuthors());
+        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        return bookformView;
     }
 
 
     @PostMapping("/save")
-    public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult theBindingResult,
+    public String saveBook(@Valid @ModelAttribute(BOOK_ATTRIBUTE) Book book, BindingResult theBindingResult,
                            @RequestParam(value = "categoryIds", required = false) Long[] categoryIds,
                            Model model) {
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("authors", authorService.getAllAuthors());
-            model.addAttribute("categories", categoryService.getAllCategories());
-            return "book-form";
+            model.addAttribute(AUTHORS, authorService.getAllAuthors());
+            model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+            return bookformView;
         }
 
 
@@ -80,10 +100,10 @@ public class BookController {
     @GetMapping("/update")
     public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
         Book book = bookService.getBookById(id);
-        model.addAttribute("book", book);
-        model.addAttribute("authors", authorService.getAllAuthors());
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "book-form";
+        model.addAttribute(BOOK_ATTRIBUTE, book);
+        model.addAttribute(AUTHORS, authorService.getAllAuthors());
+        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        return bookformView;
     }
 
     @DeleteMapping ("/delete")

@@ -18,12 +18,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+
+
 
 public class BookControllerTest {
 
@@ -116,7 +117,7 @@ public class BookControllerTest {
 
         Book book = new Book();
         Long[] categoryIds = {1L, 2L};
-        Set<Category> categories = new HashSet<>(Arrays.asList(new Category(), new Category()));
+
 
         when(categoryService.getCategoryById(1L)).thenReturn(new Category());
         when(categoryService.getCategoryById(2L)).thenReturn(new Category());
@@ -126,6 +127,8 @@ public class BookControllerTest {
         assertEquals("redirect:/books/list", view);
         verify(bookService, times(1)).saveBook(book);
     }
+
+
 
     @Test
     public void testShowFormForUpdate() {
@@ -176,7 +179,6 @@ public class BookControllerTest {
         invalidBook.setTitle("Sh");
         invalidBook.setIsbn("123456789012");
 
-        BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
 
         String view = bookController.saveBook(invalidBook, bindingResult, new Long[]{1L}, model);
@@ -193,7 +195,6 @@ public class BookControllerTest {
         validBook.setTitle("Valid Book Title");
         validBook.setIsbn("1234567890123");
 
-        BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
 
         String view = bookController.saveBook(validBook, bindingResult, null, model);
@@ -201,24 +202,6 @@ public class BookControllerTest {
         assertEquals("redirect:/books/list", view);
         verify(bookService, times(1)).saveBook(validBook);
     }
-
-    @Test
-    public void testShowFormForUpdate_BookExists() {
-        Book existingBook = new Book();
-        existingBook.setId(1L);
-        existingBook.setTitle("Existing Book");
-        existingBook.setIsbn("1234567890123");
-
-        when(bookService.getBookById(1L)).thenReturn(existingBook);
-
-        String view = bookController.showFormForUpdate(1L, model);
-
-        assertEquals("book-form", view); // Ensure the form is displayed
-        verify(model, times(1)).addAttribute(eq("book"), eq(existingBook));
-        verify(model, times(1)).addAttribute(eq("authors"), anyList());
-        verify(model, times(1)).addAttribute(eq("categories"), anyList());
-    }
-
 
 
 }

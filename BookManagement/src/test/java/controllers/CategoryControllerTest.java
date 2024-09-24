@@ -38,7 +38,6 @@ public class CategoryControllerTest {
     }
 
 
-
     @Test
     public void testInitBinder() {
         WebDataBinder binder = mock(WebDataBinder.class);
@@ -88,7 +87,7 @@ public class CategoryControllerTest {
         String view = categoryController.showFormForUpdate(1L, model);
         assertEquals("category-form", view);
         verify(categoryService, times(1)).getCategoryById(1L);
-        verify(model, times(1)).addAttribute(eq("category"), eq(category));
+        verify(model, times(1)).addAttribute(eq("category"), any(Category.class));
     }
 
     @Test

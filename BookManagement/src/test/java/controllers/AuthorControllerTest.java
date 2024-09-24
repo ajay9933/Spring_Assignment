@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -30,9 +33,11 @@ public class AuthorControllerTest {
     @Mock
     private BindingResult bindingResult;
 
+
+
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
 
@@ -45,9 +50,11 @@ public class AuthorControllerTest {
 
     @Test
     public void testListAuthors() {
+        List<Author> authors = Arrays.asList(new Author(), new Author());
+        when(authorService.getAllAuthors()).thenReturn(authors);
         String view = authorController.listAuthors(model);
         assertEquals("author", view);
-        verify(model, times(1)).addAttribute(eq("authors"), anyList());
+        verify(model, times(1)).addAttribute(eq("authors"), eq(authors));
     }
 
 

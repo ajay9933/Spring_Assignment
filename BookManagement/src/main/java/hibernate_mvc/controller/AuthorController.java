@@ -18,8 +18,19 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/authors")
+
 public class AuthorController {
 
+
+    private final String authorView="author";
+
+    private final String authorformView="author-form";
+
+   private final String AUTHOR_ATTRIBUTE="author";
+
+   private final String AUTHORS="authors";
+
+    private final AuthorService authorService;
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder)
@@ -30,28 +41,31 @@ public class AuthorController {
 
 
     @Autowired
-    private AuthorService authorService;
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping("/list")
     public String listAuthors(Model model) {
-        model.addAttribute("authors", authorService.getAllAuthors());
-        return "author";
+        model.addAttribute(AUTHORS, authorService.getAllAuthors());
+
+        return authorView;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute("author", new Author());
-        return "author-form";
+        model.addAttribute(AUTHOR_ATTRIBUTE, new Author());
+        return authorformView;
     }
 
 
     @PostMapping("/save")
     public String saveAuthor(@Valid @ModelAttribute("author") Author author, BindingResult theBindingResult) {
 
-        System.out.println("hello");
+
         if (theBindingResult.hasErrors()) {
 
-            return "author-form";
+            return authorformView;
         }
         authorService.saveAuthor(author);
         return "redirect:/authors/list";
@@ -63,8 +77,8 @@ public class AuthorController {
     {
 
         Author author = authorService.getAuthorById(id);
-        model.addAttribute("author", author);
-        return "author-form";
+        model.addAttribute(AUTHOR_ATTRIBUTE, author);
+        return authorformView;
     }
 
 
