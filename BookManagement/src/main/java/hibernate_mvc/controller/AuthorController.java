@@ -26,9 +26,9 @@ public class AuthorController {
 
     private final String authorformView="author-form";
 
-   private final String AUTHOR_ATTRIBUTE="author";
+    private final String AUTHOR_ATTRIBUTE="author";
 
-   private final String AUTHORS="authors";
+    private final String AUTHORS="authors";
 
     private final AuthorService authorService;
 
