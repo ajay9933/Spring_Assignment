@@ -22,13 +22,11 @@ import javax.validation.Valid;
 public class AuthorController {
 
 
-    private static final String authorView="author";
+    private static final String AUTHOR_VIEW = "author";
+    private static final String AUTHOR_FORM_VIEW = "author-form";
+    private static final String AUTHOR_ATTRIBUTE = "author";
+    private static final String AUTHORS = "authors";
 
-    private static final   String authorformView="author-form";
-
-   private  static final String authorAttribute="author";
-
-   private  static final String authors="authors";
 
     private final AuthorService authorService;
 
@@ -47,15 +45,15 @@ public class AuthorController {
 
     @GetMapping("/list")
     public String listAuthors(Model model) {
-        model.addAttribute(authors, authorService.getAllAuthors());
+        model.addAttribute(AUTHORS, authorService.getAllAuthors());
 
-        return authorView;
+        return AUTHOR_VIEW;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute(authorAttribute, new Author());
-        return authorformView;
+        model.addAttribute(AUTHOR_ATTRIBUTE, new Author());
+        return AUTHOR_FORM_VIEW;
     }
 
 
@@ -65,7 +63,7 @@ public class AuthorController {
 
         if (theBindingResult.hasErrors()) {
 
-            return authorformView;
+            return AUTHOR_FORM_VIEW;
         }
         authorService.saveAuthor(author);
         return "redirect:/authors/list";
@@ -77,8 +75,8 @@ public class AuthorController {
     {
 
         Author author = authorService.getAuthorById(id);
-        model.addAttribute(authorAttribute, author);
-        return authorformView;
+        model.addAttribute(AUTHOR_ATTRIBUTE, author);
+        return AUTHOR_FORM_VIEW;
     }
 
 

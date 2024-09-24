@@ -19,13 +19,11 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private static final  String categoryView="category";
+    private static final String CATEGORY_VIEW = "category";
+    private static final String CATEGORY_FORM_VIEW = "category-form";
+    private static final String CATEGORY_ATTRIBUTE = "category";
+    private static final String CATEGORIES = "categories";
 
-    private static final String categoryformView="category-form";
-
-    private static final String categoryAttribute="category";
-
-    private static final String categories="categories";
 
     @Autowired
     public CategoryController(CategoryService categoryService) {
@@ -40,22 +38,22 @@ public class CategoryController {
     }
     @GetMapping("/list")
     public String listCategories(Model model) {
-        model.addAttribute(categories, categoryService.getAllCategories());
-        return categoryView;
+        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        return CATEGORY_VIEW;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute(categoryAttribute, new Category());
-        return categoryformView;
+        model.addAttribute(CATEGORY_ATTRIBUTE, new Category());
+        return CATEGORY_FORM_VIEW;
     }
 
 
     @PostMapping("/save")
-    public String saveCategory(@Valid @ModelAttribute(categoryAttribute) Category category, BindingResult theBindingResult) {
+    public String saveCategory(@Valid @ModelAttribute(CATEGORY_ATTRIBUTE) Category category, BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
-            return categoryformView;
+            return CATEGORY_FORM_VIEW;
         }
 
         categoryService.saveCategory(category);
@@ -65,8 +63,8 @@ public class CategoryController {
     @GetMapping("/update")
     public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
         Category category = categoryService.getCategoryById(id);
-        model.addAttribute(categoryAttribute, category);
-        return categoryformView;
+        model.addAttribute(CATEGORY_ATTRIBUTE, category);
+        return CATEGORY_FORM_VIEW;
     }
 
     @DeleteMapping("/delete")
