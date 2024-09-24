@@ -19,13 +19,13 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private final String categoryView="category";
+    private static final  String categoryView="category";
 
-    private final String categoryformView="category-form";
+    private static final String categoryformView="category-form";
 
-    private final String CATEGORY_ATTRIBUTE="category";
+    private static final String categoryAttribute="category";
 
-    private final String CATEGORIES="categories";
+    private static final String categories="categories";
 
     @Autowired
     public CategoryController(CategoryService categoryService) {
@@ -40,19 +40,19 @@ public class CategoryController {
     }
     @GetMapping("/list")
     public String listCategories(Model model) {
-        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        model.addAttribute(categories, categoryService.getAllCategories());
         return categoryView;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute(CATEGORY_ATTRIBUTE, new Category());
+        model.addAttribute(categoryAttribute, new Category());
         return categoryformView;
     }
 
 
     @PostMapping("/save")
-    public String saveCategory(@Valid @ModelAttribute(CATEGORY_ATTRIBUTE) Category category, BindingResult theBindingResult) {
+    public String saveCategory(@Valid @ModelAttribute(categoryAttribute) Category category, BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
             return categoryformView;
@@ -65,7 +65,7 @@ public class CategoryController {
     @GetMapping("/update")
     public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
         Category category = categoryService.getCategoryById(id);
-        model.addAttribute(CATEGORY_ATTRIBUTE, category);
+        model.addAttribute(categoryAttribute, category);
         return categoryformView;
     }
 

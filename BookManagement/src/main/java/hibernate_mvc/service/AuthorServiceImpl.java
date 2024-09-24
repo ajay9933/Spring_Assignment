@@ -10,8 +10,14 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
+
+    private final AuthorDAO authorDAO;
+
     @Autowired
-    private AuthorDAO authorDAO;
+    public AuthorServiceImpl(AuthorDAO authorDAO)
+    {
+        this.authorDAO=authorDAO;
+    }
 
     @Override
     @Transactional

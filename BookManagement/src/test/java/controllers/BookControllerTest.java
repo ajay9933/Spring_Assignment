@@ -48,7 +48,7 @@ public class BookControllerTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -202,6 +202,9 @@ public class BookControllerTest {
         assertEquals("redirect:/books/list", view);
         verify(bookService, times(1)).saveBook(validBook);
     }
+
+
+
 
 
 }

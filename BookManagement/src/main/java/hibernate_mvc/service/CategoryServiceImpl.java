@@ -1,7 +1,5 @@
 package hibernate_mvc.service;
 
-
-
 import hibernate_mvc.dao.CategoryDAO;
 import hibernate_mvc.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,13 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+    private final CategoryDAO categoryDAO;
+
     @Autowired
-    private CategoryDAO categoryDAO;
+    public CategoryServiceImpl(CategoryDAO categoryDAO)
+    {
+        this.categoryDAO=categoryDAO;
+    }
 
     @Override
     @Transactional

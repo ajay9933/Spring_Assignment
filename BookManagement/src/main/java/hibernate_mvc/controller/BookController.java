@@ -31,17 +31,17 @@ public class BookController {
 
 
 
-    private final String bookView="book";
+    private static final String bookView="book";
 
-    private final String bookformView="book-form";
+    private static final String bookformView="book-form";
 
-    private final String BOOK_ATTRIBUTE="book";
+    private static final String bookAttribute="book";
 
-    private final String BOOKS="books";
+    private static final String books="books";
 
-    private final String AUTHORS="authors";
+    private static final  String authors="authors";
 
-    private final String CATEGORIES="categories";
+    private static final  String categories="categories";
 
 
     @Autowired
@@ -61,26 +61,26 @@ public class BookController {
 
     @GetMapping("/list")
     public String listBooks(Model model) {
-        model.addAttribute(BOOKS, bookService.getAllBooks());
+        model.addAttribute(books, bookService.getAllBooks());
         return bookView;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute(BOOK_ATTRIBUTE, new Book());
-        model.addAttribute(AUTHORS, authorService.getAllAuthors());
-        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        model.addAttribute(bookAttribute, new Book());
+        model.addAttribute(authors, authorService.getAllAuthors());
+        model.addAttribute(categories, categoryService.getAllCategories());
         return bookformView;
     }
 
 
     @PostMapping("/save")
-    public String saveBook(@Valid @ModelAttribute(BOOK_ATTRIBUTE) Book book, BindingResult theBindingResult,
+    public String saveBook(@Valid @ModelAttribute(bookAttribute) Book book, BindingResult theBindingResult,
                            @RequestParam(value = "categoryIds", required = false) Long[] categoryIds,
                            Model model) {
         if (theBindingResult.hasErrors()) {
-            model.addAttribute(AUTHORS, authorService.getAllAuthors());
-            model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+            model.addAttribute(authors, authorService.getAllAuthors());
+            model.addAttribute(categories, categoryService.getAllCategories());
             return bookformView;
         }
 
@@ -100,9 +100,9 @@ public class BookController {
     @GetMapping("/update")
     public String showFormForUpdate(@RequestParam("id") Long id, Model model) {
         Book book = bookService.getBookById(id);
-        model.addAttribute(BOOK_ATTRIBUTE, book);
-        model.addAttribute(AUTHORS, authorService.getAllAuthors());
-        model.addAttribute(CATEGORIES, categoryService.getAllCategories());
+        model.addAttribute(bookAttribute, book);
+        model.addAttribute(authors, authorService.getAllAuthors());
+        model.addAttribute(categories, categoryService.getAllCategories());
         return bookformView;
     }
 

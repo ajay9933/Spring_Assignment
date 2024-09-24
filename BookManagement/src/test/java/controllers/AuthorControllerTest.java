@@ -54,7 +54,7 @@ public class AuthorControllerTest {
         when(authorService.getAllAuthors()).thenReturn(authors);
         String view = authorController.listAuthors(model);
         assertEquals("author", view);
-        verify(model, times(1)).addAttribute(eq("authors"), eq(authors));
+        verify(model, times(1)).addAttribute("authors", authors);
     }
 
 

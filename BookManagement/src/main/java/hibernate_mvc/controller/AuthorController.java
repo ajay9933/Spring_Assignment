@@ -22,13 +22,13 @@ import javax.validation.Valid;
 public class AuthorController {
 
 
-    private final String authorView="author";
+    private static final String authorView="author";
 
-    private final String authorformView="author-form";
+    private static final   String authorformView="author-form";
 
-    private final String AUTHOR_ATTRIBUTE="author";
+   private  static final String authorAttribute="author";
 
-    private final String AUTHORS="authors";
+   private  static final String authors="authors";
 
     private final AuthorService authorService;
 
@@ -47,14 +47,14 @@ public class AuthorController {
 
     @GetMapping("/list")
     public String listAuthors(Model model) {
-        model.addAttribute(AUTHORS, authorService.getAllAuthors());
+        model.addAttribute(authors, authorService.getAllAuthors());
 
         return authorView;
     }
 
     @GetMapping("/add")
     public String showFormForAdd(Model model) {
-        model.addAttribute(AUTHOR_ATTRIBUTE, new Author());
+        model.addAttribute(authorAttribute, new Author());
         return authorformView;
     }
 
@@ -77,7 +77,7 @@ public class AuthorController {
     {
 
         Author author = authorService.getAuthorById(id);
-        model.addAttribute(AUTHOR_ATTRIBUTE, author);
+        model.addAttribute(authorAttribute, author);
         return authorformView;
     }
 

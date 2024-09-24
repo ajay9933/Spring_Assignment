@@ -1,5 +1,6 @@
 package hibernate_mvc.service;
 
+
 import hibernate_mvc.dao.BookDAO;
 import hibernate_mvc.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,13 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
+    private final BookDAO bookDAO;
+
     @Autowired
-    private BookDAO bookDAO;
+    public BookServiceImpl(BookDAO bookDAO)
+    {
+        this.bookDAO=bookDAO;
+    }
 
     @Override
     @Transactional
